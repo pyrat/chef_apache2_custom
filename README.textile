@@ -3,9 +3,26 @@
 A cookbook for tieing up loose ends for an apache server setup.
 Its does the following:
 
-* Create /var/www/apps directory
-* Chown /var/www/apps to deploy user
-* Add deploy user to www-data group, add www-data to deploy group.
+default
+
+* Create /var/www/apps directory with application user
+* Add application (deploy) user to apache (www-data) group, add apache to application group.
+
+
+github
+
+* Copies private key from encrypted databag to the .ssh directory to allow github cloning.
+
+
+knife data bag create --secret-file /tmp/my_data_bag_key githubs blissio
+
+The above command opens up your EDITOR variable.
+
+{
+  "id" => "blissio",
+  "private_key" => "paste ESCAPED private key here."
+}
+
 
 = REQUIREMENTS:
 
@@ -13,9 +30,11 @@ An installation of apache2.
 
 = ATTRIBUTES:
 
-user,
-directory,
-group
+default[:apache_custom][:app_dir] = "/var/www/apps"
+default[:apache_custom][:app_user] = "deploy"
+default[:apache_custom][:app_group] = "deploy"
+default[:apache_custom][:apache_group] = "www-data"
+
 
 = USAGE:
 
