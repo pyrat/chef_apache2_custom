@@ -1,0 +1,22 @@
+= DESCRIPTION:
+
+A cookbook for tieing up loose ends for an apache server setup.
+Its does the following:
+
+* Create /var/www/apps directory
+* Chown /var/www/apps to deploy user
+* Add deploy user to www-data group, add www-data to deploy group.
+
+= REQUIREMENTS:
+
+An installation of apache2.
+
+= ATTRIBUTES:
+
+user,
+directory,
+group
+
+= USAGE:
+
+Not sure yet.
