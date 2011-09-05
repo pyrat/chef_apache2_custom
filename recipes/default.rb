@@ -7,8 +7,8 @@
 #
 
 directory node[:apache_custom][:app_dir] do
-  owner default[:apache_custom][:app_user]
-  group default[:apache_custom][:app_group]
+  owner node[:apache_custom][:app_user]
+  group node[:apache_custom][:app_group]
   mode "0775"
   action :create
   not_if do
@@ -17,11 +17,11 @@ directory node[:apache_custom][:app_dir] do
 end
 
 execute "groups apache" do
-  command "usermod -a -G #{default[:apache_custom][:apache_group]} #{default[:apache_custom][:app_group]}"
+  command "usermod -a -G #{node[:apache_custom][:apache_group]} #{node[:apache_custom][:app_group]}"
 end
 
 execute "groups app" do
-  command "usermod -a -G #{default[:apache_custom][:app_group]} #{default[:apache_custom][:apache_group]}"
+  command "usermod -a -G #{node[:apache_custom][:app_group]} #{node[:apache_custom][:apache_group]}"
 end
 
 execute "disable the default apache configuration" do
