@@ -26,5 +26,36 @@ directory default_dir do
   end
 end
 
-templa
+template "#{default_dir}/index.html" do
+  action :create_if_missing
+  source "index.html.erb"
+  owner node[:apache_custom][:app_user]
+  group node[:apache_custom][:app_group]
+  variables(
+  :server_name => node[:apache_custom][:server_name], 
+  :image_path => node[:apache_custom][:image_path]
+  )
+end
 
+# Copy assets
+
+%w(body_repeat.jpg style.css default.jpg) each do |asset|
+  template "#{default_dir}/#{asset}" do
+    action :create_if_missing
+    source asset
+    owner node[:apache_custom][:app_user]
+    group node[:apache_custom][:app_group]
+  end
+end
+
+template "/etc/apache2/sites_available/default_site" do
+  action :create_if_missing
+  source "vhost.erb"
+  owner node[:apache_custom][:app_user]
+  group node[:apache_custom][:app_group]
+  variables(
+  :document_root => default_dir
+  )
+end
+
+a2ensite "default_site"

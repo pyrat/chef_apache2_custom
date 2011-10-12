@@ -1,6 +1,6 @@
 = DESCRIPTION:
 
-A cookbook for tieing up loose ends for an apache server setup.
+A cookbook for fixing up loose ends for an apache server setup.
 Its does the following:
 
 default
@@ -8,6 +8,9 @@ default
 * Create /var/www/apps directory with application user
 * Add application (deploy) user to apache (www-data) group, add apache to application group.
 
+default_site
+
+* this creates a default site for apache installations
 
 github
 
@@ -34,6 +37,12 @@ default[:apache_custom][:app_dir] = "/var/www/apps"
 default[:apache_custom][:app_user] = "deploy"
 default[:apache_custom][:app_group] = "deploy"
 default[:apache_custom][:apache_group] = "www-data"
+
+For default site recipe
+default[:apache_custom][:server_name] = 'default'
+default[:apache_custom][:image_path] = 'default.jpg'
+
+
 
 
 = USAGE:
