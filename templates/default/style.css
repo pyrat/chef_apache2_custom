@@ -1,0 +1,24 @@
+body {
+  background-image:url(body_repeat.jpg);
+  font-family:"Trebuchet MS", Verdana, Arial;
+  font-size:14px;
+}
+
+#container {
+  background-color:#FFF;
+  width:600px;
+  text-align:center;
+  margin:60px auto;
+  padding:20px;
+}
+
+img {
+  border:#CCC 1px solid;
+  padding:5px;
+}
+
+#right-col {
+  width:205px;
+  float:right;
+  margin-right:50px;
+}
