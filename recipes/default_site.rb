@@ -8,7 +8,7 @@
 
 # This installs a default site, overwriting the standard apache2 default page.
 
-include "apache2"
+include_recipe "apache2"
 
 # copy site to /var/www/apps/default_site
 # setup site on sites-available/default_site
@@ -35,20 +35,22 @@ template "#{default_dir}/index.html" do
   :server_name => node[:apache_custom][:server_name], 
   :image_path => node[:apache_custom][:image_path]
   )
+  mode "0775"
 end
 
 # Copy assets
 
-%w(body_repeat.jpg style.css default.jpg) each do |asset|
+%w(body_repeat.jpg style.css default.jpg).each do |asset|
   template "#{default_dir}/#{asset}" do
     action :create_if_missing
     source asset
     owner node[:apache_custom][:app_user]
     group node[:apache_custom][:app_group]
+    mode "0775"
   end
 end
 
-template "/etc/apache2/sites_available/default_site" do
+template "/etc/apache2/sites-available/default_site" do
   action :create_if_missing
   source "vhost.erb"
   owner node[:apache_custom][:app_user]
@@ -58,4 +60,4 @@ template "/etc/apache2/sites_available/default_site" do
   )
 end
 
-a2ensite "default_site"
+apache_site "default_site"
