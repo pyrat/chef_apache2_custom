@@ -11,6 +11,7 @@ directory node[:apache_custom][:app_dir] do
   group node[:apache_custom][:app_group]
   mode "0775"
   action :create
+  recursive true
   not_if do
     File.directory?(node[:apache_custom][:app_dir])
   end
